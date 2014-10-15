@@ -3,7 +3,6 @@
 namespace NuitsCroixRousse\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use DateTime;
 
 class User implements UserInterface {
 
