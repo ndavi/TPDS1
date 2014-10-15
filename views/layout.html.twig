@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ app.request.basepath }}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ app.request.basepath }}/lib/css/croixRousse.css" rel="stylesheet">
+        <title>GSB-Report - {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Barre de navigation en haut de la page -->
+            <div class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <!-- Partie de la barre toujours affichée -->
+                    <div class="navbar-header">
+                        <!-- Bouton affiché à droite si la zone d'affichage est trop petite -->
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Activer la navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Lien de retour à la page d'accueil -->
+                        <a class="navbar-brand" href="{{ path('acceuil') }}">Les Nuits de la Croix Rousse</a>
+                    </div>
+                    <!-- Partie de la barre masquée en fonction de la zone d'affichage -->
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown {% if concertMenu is defined %}active{% endif %}">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">Concerts <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('concerts') }}">Consulter</a></li>
+                                    <li><a href="{{ path('concertSearch') }}">Rechercher</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user"></span> Bonjour, {{ app.security.token.user.username }} <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('logout') }}">Déconnection</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user"></span> Non connecté <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('login') }}">Connexion</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% autoescape %}
+                <div id="content">{% block content %}{% endblock %}</div>
+            {% endautoescape %}
+        </div>
+        <!-- jQuery -->
+        <script src="{{ app.request.basepath }}/lib/jquery/jquery-1.11.1.min.js"></script>
+        <!-- JavaScript Boostrap plugin -->
+        <script src="{{ app.request.basepath }}/lib/bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>
